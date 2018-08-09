@@ -1,3 +1,7 @@
+/**
+ * 生成文章目录
+ * @param opts 配置项
+ */
 export default function(opts) {
   let defaultOpts = {
     linkClass: 'cl-link',                             // 所有目录项都有的类
@@ -5,31 +9,26 @@ export default function(opts) {
     datasetName: 'data-cata-target',                  // 目录项DOM的attribute存放对应目录的id
     selector: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],   // 按优先级排序
     scrollWrapper: null,                              // 按优先级排序
-    active: null                                      // 激活时候回调
+    activeHook: null,                                 // 激活时候回调
+    topMargin: 0,
+    bottomMargin: 0
   }
   
   const Opt = Object.assign({}, defaultOpts, opts)
   
   const $content = document.getElementById(Opt.contentEl)                          // 内容获取区
   const $scroll_wrap = Opt.scrollWrapper || $content.parentNode || document.body   // 内容元素的父元素
-  const $catelog = document.getElementById(Opt.catelogEl)                          // 目录容器
+  const $catalog = document.getElementById(Opt.catalogEl)                          // 目录容器
   
-  let allCatelogs = $content.querySelectorAll(Opt.selector.join())
-  let tree = getCatelogsTree(allCatelogs)
+  let allCatalogs = $content.querySelectorAll(Opt.selector.join())
+  let tree = getCatalogsTree(allCatalogs)
   
-  $catelog.innerHTML = `<div class='cl-wrapper'>${generateHtmlTree(tree, { id: -1 })}<svg class="cl-marker" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  $catalog.innerHTML = `<div class='cl-wrapper'>${generateHtmlTree(tree, { id: -1 })}<svg class="cl-marker" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
             <path stroke="#42B983" stroke-width="3" fill="transparent" stroke-dasharray="0, 0, 0, 1000" stroke-linecap="round" stroke-linejoin="round" transform="translate(-0.5, -0.5)" />
             </svg></div>`
   
   const tocPath = document.querySelector('.cl-marker path')
-  let tocItems
-  
-  // Factor of screen size that the element must cross
-  // before it's considered visible
-  const TOP_MARGIN = 0.05,
-    BOTTOM_MARGIN = 0
-  
-  let pathLength        // 左边svg-path长度
+  let tocItems, pathLength    // 左边svg-path长度
   
   window.addEventListener('resize', drawPath, false)
   $scroll_wrap.addEventListener('scroll', sync, false)
@@ -40,7 +39,7 @@ export default function(opts) {
    * 画出svg路径
    */
   function drawPath() {
-    tocItems = [...$catelog.querySelectorAll('li')]
+    tocItems = [...$catalog.querySelectorAll('li')]
     // Cache element references and measurements
     tocItems = tocItems.map(function(liDom) {
       const anchor = liDom.querySelector(`.${Opt.linkClass}`)
@@ -93,7 +92,7 @@ export default function(opts) {
       visibleItems = 0
     tocItems.forEach(function(liItem) {
       const { bottom, top } = liItem.target.getBoundingClientRect()
-      if (bottom > wrapHeight * TOP_MARGIN && top < wrapHeight * (1 - BOTTOM_MARGIN)) {
+      if (bottom > Opt.topMargin && top < wrapHeight - Opt.bottomMargin) {
         pathStart = Math.min(liItem.pathStart, pathStart)
         pathEnd = Math.max(liItem.pathEnd, pathEnd)
         visibleItems += 1
@@ -118,9 +117,9 @@ export default function(opts) {
    */
   $scroll_wrap.addEventListener('scroll', function resolveScroll(el) {
     let scrollToEl = null
-    for (let i = allCatelogs.length - 1; i >= 0; i--) {
-      if (allCatelogs[i].offsetTop <= $scroll_wrap.scrollTop) {
-        scrollToEl = allCatelogs[i]
+    for (let i = allCatalogs.length - 1; i >= 0; i--) {
+      if (allCatalogs[i].offsetTop <= $scroll_wrap.scrollTop) {
+        scrollToEl = allCatalogs[i]
         break
       }
     }
@@ -129,7 +128,7 @@ export default function(opts) {
   })
   
   /* 点击事件 */
-  $catelog.addEventListener('click', function({ target }) {
+  $catalog.addEventListener('click', function({ target }) {
     const datasetId = target.getAttribute(Opt.datasetName)
     target.classList.contains(Opt.linkClass) &&
     document.getElementById(datasetId)
@@ -138,16 +137,16 @@ export default function(opts) {
   
   /**
    * 获取目录树，生成类似于Vnode的树
-   * @param catelogs
+   * @param catalogs
    */
-  function getCatelogsTree(catelogs) {
+  function getCatalogsTree(catalogs) {
     let title, tagName, tree = [], treeItem = {}, parentItem = { id: -1 }, lastTreeItem = null, id
     
-    for (let i = 0; i < catelogs.length; i++) {
-      title = catelogs[i].innerText || catelogs[i].textContent
-      tagName = catelogs[i].tagName
+    for (let i = 0; i < catalogs.length; i++) {
+      title = catalogs[i].innerText || catalogs[i].textContent
+      tagName = catalogs[i].tagName
       id = 'heading-' + i
-      catelogs[i].id = id
+      catalogs[i].id = id
       treeItem = {
         name: title,
         tagName: tagName,
@@ -222,13 +221,14 @@ export default function(opts) {
    *  设置选中的项
    */
   function setActiveItem(id) {
-    let catas = [...$catelog.querySelectorAll(`[${Opt.datasetName}]`)]
+    let catas = [...$catalog.querySelectorAll(`[${Opt.datasetName}]`)]
     
     catas.forEach(T => {
       if (T.getAttribute(Opt.datasetName) === id) {
+        typeof Opt.activeHook === 'function' &&
+        !T.classList.contains(Opt.linkActiveClass) &&
+        Opt.activeHook.call(this, T)                    // 执行active钩子
         T.classList.add(Opt.linkActiveClass)
-        typeof Opt.active === 'function' &&
-        Opt.active.call(this, T)                    // 执行active钩子
       } else {
         T.classList.remove(Opt.linkActiveClass)
       }
