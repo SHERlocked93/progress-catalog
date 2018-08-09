@@ -11,6 +11,7 @@
 
 ## Preview
 
+![preview](https://github.com/SHERlocked93/progress-catalog/blob/master/assets/progress-catalog.gif)
 
 可以通过 [线上DEMO](http://sherlocked93.club/vue-style-codebase/) 来预览一下效果
 
