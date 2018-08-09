@@ -1,6 +1,6 @@
 {
   "name": "progress-catalog",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generate a progress catalog by html tag (h1, h2, h3, h4, h5, h6)",
   "main": "src/index.js",
   "scripts": {

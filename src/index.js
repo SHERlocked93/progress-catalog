@@ -1,7 +1,3 @@
-/**
- * 生成文章目录
- * @param opts 配置项
- */
 export default function(opts) {
   let defaultOpts = {
     linkClass: 'cl-link',                             // 所有目录项都有的类
@@ -23,17 +19,22 @@ export default function(opts) {
   let allCatalogs = $content.querySelectorAll(Opt.selector.join())
   let tree = getCatalogsTree(allCatalogs)
   
-  $catalog.innerHTML = `<div class='cl-wrapper'>${generateHtmlTree(tree, { id: -1 })}<svg class="cl-marker" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  try {
+    $catalog.innerHTML = `<div class='cl-wrapper'>${generateHtmlTree(tree, { id: -1 })}<svg class="cl-marker" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
             <path stroke="#42B983" stroke-width="3" fill="transparent" stroke-dasharray="0, 0, 0, 1000" stroke-linecap="round" stroke-linejoin="round" transform="translate(-0.5, -0.5)" />
             </svg></div>`
+  } catch (e) {
+    console.error('error in progress-catalog', e)
+  }
   
-  const tocPath = document.querySelector('.cl-marker path')
+  
+  const tocPath = $catalog.querySelector('.cl-marker path')
   let tocItems, pathLength    // 左边svg-path长度
   
   window.addEventListener('resize', drawPath, false)
   $scroll_wrap.addEventListener('scroll', sync, false)
   
-  drawPath()
+  setTimeout(drawPath)          // 放在宏任务中，防止找不到DOM
   
   /**
    * 画出svg路径
@@ -68,8 +69,7 @@ export default function(opts) {
         item.pathStart = 0
       }
       else {
-        // Draw an additional line when there's a change in
-        // indent levels
+        // Draw an additional line when there's a change in indent levels
         if (pathIndent !== x) path.push('L', pathIndent, y)
         path.push('L', x, y)
         // Set the current path so that we can measure it
