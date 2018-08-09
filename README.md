@@ -5,7 +5,7 @@
 - 监听内容区滚动
 - 点击跳转功能
 
-兼容性：IE10+
+兼容性：IE10+ (由于使用了 `node.classList`)
 
 欢迎提issue，提pr~
 
@@ -36,15 +36,23 @@ npm run build --report
 如果要使用默认的样式，请手动引入
 
 ```js
-import 'progress-catalog/progress-catalog.css'
+import 'progress-catalog/src/progress-catalog.css'
 ```
 
 使用方法：
 ```js
+// 引入
 import Catalog from 'ProgressCatalog'
 
-
+// 使用 
+new Catalog({
+	contentEl: 'loading-animation',
+	catalogEl: `catalog-content-wrapper`,
+	selector: ['h2', 'h3']
+})
 ```
+
+构造函数还有一些其他参数：
 
 ### contentEl [String]
 需要检索生成目录的内容区的id选择器，不需要加#
@@ -55,7 +63,7 @@ import Catalog from 'ProgressCatalog'
 ### scrollWrapper [可选, String]
 监听scroll事件的内容区容器的id选择器，不需要加#，如果不填则默认是 `contentEl` 的父元素
 
-### linkClass [String]
+### linkClass [可选, String]
 所有目录项都有的类，默认值：`cl-link`
 
 ### selector [可选, Array]
