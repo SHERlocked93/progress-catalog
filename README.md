@@ -10,8 +10,11 @@
 欢迎提issue，提pr~
 
 ## Preview
-
+炫酷模式：
 ![preview](https://github.com/SHERlocked93/progress-catalog/blob/master/assets/progress-catalog.gif)
+
+普通模式：
+![preview](https://github.com/SHERlocked93/progress-catalog/blob/master/assets/simple.gif)
 
 可以通过 [线上DEMO](http://sherlocked93.club/vue-style-codebase/) 来预览一下效果
 
@@ -75,7 +78,10 @@ new Catalog({
 当激活新的目录项标签的时候的回调函数
 
 #### topMargin [可选, Number]
-第一个目录标签在被认为可见之前需要向下移动的距离，默认值：0
+第一个目录标签在被认为可见之前需要向下移动的距离，默认值：`0`
 
 #### bottomMargin [可选, Number]
-同上，向下移动的距离，默认值：0
+同上，向下移动的距离，默认值：`0`
+
+#### cool [可选, Boolean]
+炫酷模式开关，默认值：`true`
