@@ -38,7 +38,7 @@ export default function(opts) {
   Opt.cool && $scroll_wrap.addEventListener('scroll', coolScrollHandler)
   Opt.cool || $scroll_wrap.addEventListener('scroll', simpleScrollHandler)
   
-  setTimeout(drawPath)          // 放在宏任务中，防止找不到DOM
+  setTimeout(drawPath)          // 放在宏任务队列中，防止找不到DOM
   
   /**
    * 画出svg路径
@@ -132,7 +132,9 @@ export default function(opts) {
     else setActiveItem(null)            // 无匹配的元素
   }
   
-  /* 点击事件 */
+  /**
+   * 点击事件
+   */
   function clickHandler({ target }) {
     const datasetId = target.getAttribute(Opt.datasetName)
     target.classList.contains(Opt.linkClass) &&
@@ -218,6 +220,9 @@ export default function(opts) {
     return hasChild ? ul : ''
   }
   
+  /**
+   * 判断是否是相同节点
+   */
   function isEqual(node, node2) {
     return node && node2 && typeof node === 'object' && typeof node2 === 'object' && node.id === node2.id
   }

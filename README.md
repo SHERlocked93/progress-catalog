@@ -16,7 +16,15 @@
 普通模式：
 ![preview](https://github.com/SHERlocked93/progress-catalog/blob/master/assets/simple.gif)
 
-可以通过 [线上DEMO](http://sherlocked93.club/vue-style-codebase/) 来预览一下效果
+可以通过 [线上DEMO](http://sherlocked93.club/vue-style-codebase/) 来预览一下炫酷模式的效果
+
+## 2. 实现思路
+
+滚动的监听通过 [getBoundingClientRect](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect) 获取元素大小以及相对视口的位置，判断我们的监听对象 `h1~h6` 标签是否在视口中，如果在则添加 `linkActiveClass`  类。
+
+点击目录项的定位跳转在hash模式的单页面应用中会与传统的锚点定位冲突，会导航到错误的路由路径，这里采用把要跳转的id放到 [dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset) 中，跳转的时候取出来使用 [scrollIntoView](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/scrollIntoView) 来进行平滑滚动到目标位置。
+
+左边的边栏线则是使用 [svg](http://www.ruanyifeng.com/blog/2018/08/svg.html) 的path来画出来的，根据层级相应做一些调整，辅以css的 `transition` 的效果就可以呈现出不错的移动效果。
 
 ## Build Setup
 
