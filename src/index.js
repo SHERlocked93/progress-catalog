@@ -7,7 +7,8 @@ export default function(opts) {
     scrollWrapper: null,                              // 按优先级排序
     activeHook: null,                                 // 激活时候回调
     topMargin: 0,
-    bottomMargin: 0
+    bottomMargin: 0,
+    cool: true                                        // 炫酷模式开关
   }
   
   const Opt = Object.assign({}, defaultOpts, opts)
@@ -31,8 +32,11 @@ export default function(opts) {
   const tocPath = $catalog.querySelector('.cl-marker path')
   let tocItems, pathLength    // 左边svg-path长度
   
-  window.addEventListener('resize', drawPath, false)
-  $scroll_wrap.addEventListener('scroll', sync, false)
+  // 事件注册
+  window.addEventListener('resize', drawPath)
+  $catalog.addEventListener('click', clickHandler)
+  Opt.cool && $scroll_wrap.addEventListener('scroll', coolScrollHandler)
+  Opt.cool || $scroll_wrap.addEventListener('scroll', simpleScrollHandler)
   
   setTimeout(drawPath)          // 放在宏任务中，防止找不到DOM
   
@@ -41,7 +45,6 @@ export default function(opts) {
    */
   function drawPath() {
     tocItems = [...$catalog.querySelectorAll('li')]
-    // Cache element references and measurements
     tocItems = tocItems.map(function(liDom) {
       const anchor = liDom.querySelector(`.${Opt.linkClass}`)
       const target = document.getElementById(anchor.getAttribute('data-cata-target'))
@@ -52,27 +55,24 @@ export default function(opts) {
         target: target
       }
     })
-    // Remove missing targets
     tocItems = tocItems.filter(item => !!item.target)
     
     const path = []
     let pathIndent
     
-    tocItems.forEach(function(item, i) {
+    tocItems.forEach(function(item, idx) {
+      const { offsetLeft, offsetTop, offsetHeight } = item.anchor,
+        x = Opt.cool ? offsetLeft - 5 : offsetLeft,
+        y = offsetTop,
+        height = offsetHeight
       
-      const x = item.anchor.offsetLeft - 5,
-        y = item.anchor.offsetTop,
-        height = item.anchor.offsetHeight
-      
-      if (i === 0) {
+      if (idx === 0) {
         path.push('M', x, y, 'L', x, y + height)
         item.pathStart = 0
       }
       else {
-        // Draw an additional line when there's a change in indent levels
-        if (pathIndent !== x) path.push('L', pathIndent, y)
+        if (pathIndent !== x) path.push('L', pathIndent, y)     // 缩进级别发生变化
         path.push('L', x, y)
-        // Set the current path so that we can measure it
         tocPath.setAttribute('d', path.join(' '))
         item.pathStart = tocPath.getTotalLength() || 0
         path.push('L', x, y + height)
@@ -82,26 +82,32 @@ export default function(opts) {
       item.pathEnd = tocPath.getTotalLength()
     })
     pathLength = tocPath.getTotalLength()
-    sync()
+    coolScrollHandler()
   }
   
-  function sync() {
+  /**
+   * 炫酷模式下滚动事件
+   */
+  function coolScrollHandler() {
     const wrapHeight = $scroll_wrap.clientHeight
     let pathStart = pathLength,
       pathEnd = 0,
       visibleItems = 0
     tocItems.forEach(function(liItem) {
-      const { bottom, top } = liItem.target.getBoundingClientRect()
+      const { bottom, top } = liItem.target.getBoundingClientRect(),
+        firstChild = liItem.listItem.firstChild
       if (bottom > Opt.topMargin && top < wrapHeight - Opt.bottomMargin) {
         pathStart = Math.min(liItem.pathStart, pathStart)
         pathEnd = Math.max(liItem.pathEnd, pathEnd)
         visibleItems += 1
-        liItem.listItem.classList.add('visible')
+        firstChild.classList.add(Opt.linkActiveClass)
+        Opt.cool && firstChild.classList.add('cl-transform')
       } else {
-        liItem.listItem.classList.remove('visible')
+        firstChild.classList.remove(Opt.linkActiveClass)
+        Opt.cool && firstChild.classList.remove('cl-transform')
       }
     })
-    if (visibleItems > 0 && pathStart < pathEnd) {
+    if (visibleItems > 0 && pathStart < pathEnd && Opt.cool) {
       tocPath.setAttribute('stroke-dashoffset', '1')
       tocPath.setAttribute('stroke-dasharray', `1, ${pathStart}, ${pathEnd - pathStart}, ${pathLength}`)
       tocPath.setAttribute('opacity', '1')
@@ -112,10 +118,9 @@ export default function(opts) {
   }
   
   /**
-   * 滚动处理事件
-   * @param e
+   * 普通模式下滚动事件
    */
-  $scroll_wrap.addEventListener('scroll', function resolveScroll(el) {
+  function simpleScrollHandler(el) {
     let scrollToEl = null
     for (let i = allCatalogs.length - 1; i >= 0; i--) {
       if (allCatalogs[i].offsetTop <= $scroll_wrap.scrollTop) {
@@ -125,15 +130,15 @@ export default function(opts) {
     }
     if (scrollToEl) setActiveItem(scrollToEl.id)
     else setActiveItem(null)            // 无匹配的元素
-  })
+  }
   
   /* 点击事件 */
-  $catalog.addEventListener('click', function({ target }) {
+  function clickHandler({ target }) {
     const datasetId = target.getAttribute(Opt.datasetName)
     target.classList.contains(Opt.linkClass) &&
     document.getElementById(datasetId)
       .scrollIntoView({ behavior: "smooth", block: "start" })
-  })
+  }
   
   /**
    * 获取目录树，生成类似于Vnode的树

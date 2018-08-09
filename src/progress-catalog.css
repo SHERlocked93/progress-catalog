@@ -9,10 +9,13 @@
   list-style: none;
 }
 
-.cl-wrapper li.visible > .cl-link {
+.cl-wrapper li > .cl-link.cl-link-active {
   color: rgba(66, 185, 131, 0.9);
-  transform: translate(3px);
   transition: .5s;
+}
+
+.cl-wrapper li > .cl-transform.cl-link-active {
+  transform: translate(3px);
 }
 
 .cl-wrapper .cl-link {
@@ -20,10 +23,6 @@
   color: rgba(52, 73, 94, 0.5);
   font-size: 13px;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.cl-wrapper .cl-link-active {
-  color: rgba(66, 185, 131, 0.9);
 }
 
 .cl-wrapper .cl-marker {
