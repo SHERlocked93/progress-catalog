@@ -1,0 +1,22 @@
+{
+  "name": "progress-catalog",
+  "version": "1.0.0",
+  "description": "Generate a progress catalog by html tag (h1, h2, h3, h4, h5, h6)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SHERlocked93/ProgressCatalog.git"
+  },
+  "keywords": [
+    "catalog"
+  ],
+  "author": "SHERlocked93",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SHERlocked93/ProgressCatalog/issues"
+  },
+  "homepage": "https://github.com/SHERlocked93/ProgressCatalog#readme"
+}
