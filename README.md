@@ -11,9 +11,11 @@
 
 ## Preview
 炫酷模式：
+
 ![preview](https://github.com/SHERlocked93/progress-catalog/blob/master/assets/progress-catalog.gif)
 
 普通模式：
+
 ![preview](https://github.com/SHERlocked93/progress-catalog/blob/master/assets/simple.gif)
 
 可以通过 [线上DEMO](http://sherlocked93.club/vue-style-codebase/) 来预览一下炫酷模式的效果
@@ -29,17 +31,11 @@
 ## Build Setup
 
 ``` bash
-# install dependencies
+# npm安装包依赖
 npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
+# 使用babel编译
 npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 
 
