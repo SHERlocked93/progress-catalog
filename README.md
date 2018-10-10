@@ -1,4 +1,6 @@
 # progress-catalog
+![npm](https://img.shields.io/npm/v/progress-catalog.svg)
+![license](https://img.shields.io/github/license/jserwang/rc-bmap.svg)
 
 这个插件根据选定的目录内容中的 `h1, h2, h3, h4, h5, h6` 标签来自动生成目录插入到选定的目录容器中，并且提供一个漂亮的样式效果
 
