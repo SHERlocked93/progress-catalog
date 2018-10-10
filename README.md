@@ -91,3 +91,7 @@ new Catalog({
 
 #### cool [可选, Boolean]
 炫酷模式开关，默认值：`true`
+
+## 协议
+
+[MIT 许可证](https://opensource.org/licenses/MIT)
