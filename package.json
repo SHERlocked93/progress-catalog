@@ -1,18 +1,18 @@
 {
   "name": "progress-catalog",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Generate a progress catalog by html tag (h1, h2, h3, h4, h5, h6)",
-  "main": "index.js",
+  "main": "dist/progress-catalog.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d ./"
+    "build": "babel --presets=es2015 src/index.js -o dist/progress-catalog.js && uglifyjs dist/progress-catalog.js -m -o dist/progress-catalog.min.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SHERlocked93/ProgressCatalog.git"
   },
   "keywords": [
-    "catalog"
+    "catalog",
+    "svg"
   ],
   "author": "SHERlocked93",
   "license": "ISC",
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/SHERlocked93/ProgressCatalog#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1"
+    "babel-preset-es2015": "^6.24.1",
+    "uglify-js": "^3.4.9"
   }
 }

@@ -2,23 +2,27 @@
 ![npm](https://img.shields.io/npm/v/progress-catalog.svg)
 ![license](https://img.shields.io/github/license/jserwang/rc-bmap.svg)
 
-这个插件根据选定的目录内容中的 `h1, h2, h3, h4, h5, h6` 标签来自动生成目录插入到选定的目录容器中，并且提供一个漂亮的样式效果
+这个插件根据选定的目录内容中的 `h1, h2, h3, h4, h5, h6` 标签来自动生成目录插入到选定的目录容器中，并且提供一个漂亮的样式效果；
 
 - 监听内容区滚动
 - 点击跳转功能
 
-兼容性：IE10+ (由于使用了 `node.classList`)
+**兼容性：** IE10+ (由于使用了 `node.classList`)
+
+**依赖性：** 不依赖任何库
+
+**大小：** 压缩之后 `4.22kb`
 
 欢迎提issue，提pr~
 
 ## Preview
 炫酷模式：
 
-![preview](https://github.com/SHERlocked93/progress-catalog/blob/master/assets/progress-catalog.gif)
+![](https://i.loli.net/2018/09/28/5bad890a0cdd7.gif)
 
 普通模式：
 
-![preview](https://github.com/SHERlocked93/progress-catalog/blob/master/assets/simple.gif)
+![](https://i.loli.net/2018/09/28/5bad890db3d81.gif)
 
 可以通过 [线上DEMO](http://sherlocked93.club/vue-style-codebase/) 来预览一下炫酷模式的效果
 
