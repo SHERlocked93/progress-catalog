@@ -26,7 +26,7 @@
 
 可以通过 [线上DEMO](http://sherlocked93.club/vue-style-codebase/) 来预览一下炫酷模式的效果
 
-## 2. 实现思路
+## 实现思路
 
 滚动的监听通过 [getBoundingClientRect](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect) 获取元素大小以及相对视口的位置，判断我们的监听对象 `h1~h6` 标签是否在视口中，如果在则添加 `linkActiveClass`  类。
 
@@ -34,7 +34,7 @@
 
 左边的边栏线则是使用 [svg](http://www.ruanyifeng.com/blog/2018/08/svg.html) 的path来画出来的，根据层级相应做一些调整，辅以css的 `transition` 的效果就可以呈现出不错的移动效果。
 
-## Build Setup
+## 本地开发
 
 ``` bash
 # npm安装包依赖
