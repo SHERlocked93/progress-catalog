@@ -1,4 +1,4 @@
-# [progress-catalog](http://sherlocked93.club/progress-catalog/)
+# [progress-catalog](http://sherlocked93.club/progress-catalog-doc/)
 ![npm](https://img.shields.io/npm/v/progress-catalog.svg)
 ![license](https://img.shields.io/github/license/jserwang/rc-bmap.svg)
 
