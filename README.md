@@ -1,4 +1,4 @@
-# progress-catalog
+# [progress-catalog](http://sherlocked93.club/progress-catalog/)
 ![npm](https://img.shields.io/npm/v/progress-catalog.svg)
 ![license](https://img.shields.io/github/license/jserwang/rc-bmap.svg)
 
@@ -11,7 +11,7 @@
 
 **依赖性：** 不依赖任何库
 
-**大小：** 压缩之后 `4.22kb`
+**大小：** 体积小，stat体积4.22kb，经过gzip之后只有1.76kb
 
 欢迎提issue，提pr~
 
