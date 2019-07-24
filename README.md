@@ -2,6 +2,7 @@
 ![npm](https://img.shields.io/npm/v/progress-catalog.svg)
 ![license](https://img.shields.io/github/license/jserwang/rc-bmap.svg)
 
+
 这个插件根据选定的目录内容中的 `h1, h2, h3, h4, h5, h6` 标签来自动生成目录插入到选定的目录容器中，并且提供一个漂亮的样式效果；
 
 - 监听内容区滚动
@@ -99,3 +100,15 @@ new Catalog({
 ## 协议
 
 [MIT 许可证](https://opensource.org/licenses/MIT)
+
+---
+
+PS： 在下的 [掘金专栏](https://juejin.im/user/5962fe1d6fb9a06bac5b9899/posts)、[SegmentFault专栏](https://segmentfault.com/blog/sherlocked93)，也欢迎大家关注我的公众号【前端下午茶】，一起加油~
+
+![](https://i.loli.net/2019/05/31/5cf08a479cd5d75372.jpg)
+
+
+另外可以加入「前端下午茶交流群」微信群，长按识别下面二维码即可加我好友，备注**加群**，我拉你入群～
+
+![](https://i.loli.net/2019/07/13/5d2986f77e9bc11533.jpg)
+
