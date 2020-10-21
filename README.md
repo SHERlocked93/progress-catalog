@@ -25,7 +25,7 @@
 
 ![](https://i.loli.net/2018/09/28/5bad890db3d81.gif)
 
-可以通过 [线上DEMO](http://sherlocked93.club/vue-style-codebase/) 来预览一下炫酷模式的效果
+可以通过 [线上DEMO](https://sherlocked93.github.io/vue-style-codebase/) 来预览一下炫酷模式的效果
 
 ## 实现思路
 
